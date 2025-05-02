@@ -1,0 +1,36 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width,initial-scale=1" />
+    <title>My Pyodide App</title>
+</head>
+
+<body>
+    <h1>👋 Pyodide Demo</h1>
+    <button id="run">Run Python</button>
+    <pre id="out"></pre>
+
+    <!-- load Pyodide -->
+    <script src="https://cdn.jsdelivr.net/pyodide/v0.23.4/full/pyodide.js"></script>
+    <script>
+        async function main() {
+            const py = await loadPyodide();
+            document.getElementById('run').addEventListener('click', async () => {
+                try {
+                    const res = await py.runPythonAsync(`
+import sys
+sys.version
+`);
+                    document.getElementById('out').textContent = res;
+                } catch (err) {
+                    document.getElementById('out').textContent = err;
+                }
+            });
+        }
+        main();
+    </script>
+</body>
+
+</html>
